@@ -7,10 +7,10 @@ body {
 }
 
 #alert {
-  position: fixed;
-  top: 0;
+  position: absolute;
+  top: 2vh;
   width: 100%;
-  padding: 25px;
+  padding: 0 25px;
 }
 
 .content-page {
