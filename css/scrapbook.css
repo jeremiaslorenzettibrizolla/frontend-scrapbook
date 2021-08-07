@@ -34,9 +34,9 @@ body {
 }
 
 .top-page #uid {
-  background-color: #2B2A2A;
+  background-color: #2b2a2a;
   border: none;
-  color: #2B2A2A;
+  color: #2b2a2a;
 }
 
 .top-page input {
@@ -60,7 +60,7 @@ body {
 }
 
 .top-page button:hover {
-  background-color: #4DAE33;
+  background-color: #4dae33;
   cursor: pointer;
 }
 
@@ -70,7 +70,7 @@ table {
 
 .btnAction {
   border-radius: 20px;
-  border: 1px solid #2C3034;
+  border: 1px solid #2c3034;
   width: 40px;
   height: 40px;
   margin-right: 8px;
