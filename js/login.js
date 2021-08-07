@@ -9,77 +9,74 @@ const emailLogin = document.getElementById('current-email');
 const passwordLogin = document.getElementById('current-password');
 
 const checkFields = () => {
-  if (username.value === '' || email.value === '' || password.value === '') {
-    alert('Todos os campos devem ser preenchidos!');
-    return;
-  }
-
-  if (password.value !== repeatPassword.value) {
-    alert('As senhas devem ser iguais');
-    return;
-  }
-
-  if (password.value.length < 6) {
-    alert('A senha deve ter pelo menos 6 caracteres');
-    return;
-  }
-  return;
+    if (username.value === '' || email.value === '' || password.value === '') {
+        alert('Todos os campos devem ser preenchidos!');
+        return;
+    } else if (password.value !== repeatPassword.value) {
+        alert('As senhas devem ser iguais');
+        return;
+    } else if (password.value.length < 6) {
+        alert('A senha deve ter pelo menos 6 caracteres');
+        return;
+    }
 }
 
 const clearFields = () => {
-  username.value = '';
-  email.value = '';
-  password.value = '';
-  repeatPassword.value = '';
+    username.value = '';
+    email.value = '';
+    password.value = '';
+    repeatPassword.value = '';
 }
 
 async function addNewUser(event) {
-  event.preventDefault();
+    event.preventDefault();
 
-  checkFields();
-  const { data, status } = await axios.get('/users');
+    checkFields();
+    const { data, status } = await axios.get('/users');
+    console.log(data);
+    console.log(status);
 
-  for (let user of data) {
+    for (let user of data) {
 
-    if (email.value === user.email) {
-      alert('Este email já esta em uso');
-      email.value = '';
-      return;
+        if (email.value === user.email) {
+            alert('Este email já esta em uso');
+            email.value = '';
+            return;
+        }
+
+        if (!email.value) {
+            alert('o campo email esta vazio');
+            return;
+        }
     }
 
-    if (email.value === '' || null) {
-      alert('o campo email esta vazio');
-      return;
-    }
-  }
+    const registerUser = axios.post('/users', {
+        username: username.value,
+        email: email.value,
+        password: password.value,
+    });
 
-  const registerUser = axios.post('/users', {
-    username: username.value,
-    email: email.value,
-    password: password.value,
-  });
-
-  clearFields();
-  alert('Usuário cadastrado com sucesso');
-  container.classList.remove('sign-up-mode');
+    clearFields();
+    alert('Usuário cadastrado com sucesso');
+    container.classList.remove('sign-up-mode');
 }
 
 async function login(event) {
-  event.preventDefault();
+    event.preventDefault();
 
-  const { data } = await axios.get('/users');
+    const { data } = await axios.get('/users');
 
-  for (let user of data) {
-    if (
-      user.email === emailLogin.value &&
-      user.password === passwordLogin.value
-    ) {
-      localStorage.setItem('userUID', user.uid)
-      localStorage.setItem('username', user.username)
+    for (let user of data) {
+        if (
+            user.email === emailLogin.value &&
+            user.password === passwordLogin.value
+        ) {
+            localStorage.setItem('userUID', user.uid)
+            localStorage.setItem('username', user.username)
 
-      window.location.href = 'scrapbook.html';
+            window.location.href = 'scrapbook.html';
+        }
     }
-  }
 
 }
 

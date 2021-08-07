@@ -1,5 +1,5 @@
 const userUID = localStorage.getItem('userUID');
-// axios.defaults.baseURL = `https://api-backend-database.herokuapp.com/${userUID}`;
+// axios.defaults.baseURL = `https://api-backend-database.herokuapp.com/users/${userUID}`;
 axios.defaults.baseURL = `http://localhost:8080/users/${userUID}`;
 
 const clearFields = () => {
@@ -8,7 +8,7 @@ const clearFields = () => {
   description.value = '';
 };
 
-function alertStatus(status) {
+function alertStatus(httpStatus) {
   if (status === 201) {
     loadTable();
     document.getElementById('scrap-post').classList.remove('none');
@@ -53,12 +53,12 @@ async function loadTable() {
   scrapbook.innerHTML = '';
 
   if (data) {
-
-
     for (let scrap of data) {
       const line = document.createElement('tr');
       line.innerHTML = `
-          <th scope="row" class"text-cel" id="${scrap.uid}">${data.indexOf(scrap) + 1}</th>
+          <th scope="row" class"text-cel" id="${scrap.uid}">${
+        data.indexOf(scrap) + 1
+      }</th>
           <td class"text-cel">${scrap.title}</td>
           <td class"text-cel">${scrap.description}</td>
           <td>
@@ -75,7 +75,7 @@ async function loadTable() {
           </td>
           `;
       scrapbook.appendChild(line);
-    };
+    }
   }
 }
 loadTable();
@@ -108,7 +108,6 @@ async function postScrap(event) {
   } else {
     response = await axios.put(`/scraps/${uid.value}`, scrap);
   }
-
   alertStatus(response.status);
   loadTable();
   clearFields();
